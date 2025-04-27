@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/possatu.html"
+      "destination": "/login.html"
     }
   ]
 }
