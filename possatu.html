@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kuis Sistem Komputer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1f1f1f;
+      color: #f0f0f0;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #00c896;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: #2a2a2a;
+      border-radius: 15px;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.01);
+    }
+    .card p {
+      font-weight: bold;
+      color: #ffd369;
+    }
+    input[type="radio"] {
+      margin: 10px 8px 10px 0;
+    }
+    label {
+      display: block;
+      padding: 6px 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      background-color: #3a3a3a;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    label:hover {
+      background-color: #444;
+    }
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      background: #00c896;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #00a67e;
+    }
+    .kode {
+      margin-top: 20px;
+      padding: 15px;
+      text-align: center;
+      border-radius: 12px;
+      font-weight: bold;
+      display: none;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    .kode.benar {
+      background: #2ecc71;
+      color: white;
+    }
+    .kode.salah {
+      background: #e74c3c;
+      color: white;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 SELAMAT DATANG DI POS SATU</h2>
+
+  <div class="card" id="soal1">
+    <p>1. Jaringan global yang menghubungkan jutaan perangkat di seluruh dunia, memungkinkan pertukaran informasi secara cepat
+      dan mudah. Internet memungkinkan kita untuk mengakses berbagai macam informasi, berkomunikasi, serta menjalankan
+      berbagai layanan digital.
+      Pernyataan di atas merupakan bagian dari ...
+    </p>
+    <label><input type="radio" name="q1" value="A"> A. Jaringan Internet</label>
+    <label><input type="radio" name="q1" value="B"> B. Topologi Jaringan</label>
+    <label><input type="radio" name="q1" value="C"> C. Jaringan Lokal</label>
+    <label><input type="radio" name="q1" value="D"> D. Jaringan Nirkabel</label>
+    <label><input type="radio" name="q1" value="E"> E. Jaringan Komputer</label>
+  </div>
+
+  <div class="card" id="soal2">
+    <p>2. Hasil konversi bilangan biner 1011101 ke desimal adalah...</p>
+    <label><input type="radio" name="q2" value="A"> A. 95</label>
+    <label><input type="radio" name="q2" value="B"> B. 94</label>
+    <label><input type="radio" name="q2" value="C"> C. 93</label>
+    <label><input type="radio" name="q2" value="D"> D. 92</label>
+    <label><input type="radio" name="q2" value="E"> E. 91</label>
+  </div>
+
+  <div class="card" id="soal3">
+    <p>3. Bilangan biner 10110111 sama dengan berapa dalam desimal?</p>
+    <label><input type="radio" name="q3" value="A"> A. 181</label>
+    <label><input type="radio" name="q3" value="B"> B. 182</label>
+    <label><input type="radio" name="q3" value="C"> C. 183</label>
+    <label><input type="radio" name="q3" value="D"> D. 184</label>
+    <label><input type="radio" name="q3" value="E"> E. 185</label>
+  </div>
+
+  <button onclick="cekJawaban()">Periksa Jawaban</button>
+
+  <div id="kode" class="kode"></div>
+
+  <script>
+    function cekJawaban() {
+      const kunci = {
+        q1: "A",
+        q2: "C",
+        q3: "C"
+      };
+      const kode = {
+        q1: "1",
+        q2: "0",
+        q3: "1"
+      };
+
+      let allCorrect = true;
+      let kodeResult = '';
+
+      for (let i = 1; i <= 3; i++) {
+        let radios = document.getElementsByName(`q${i}`);
+        let selected = null;
+        for (let r of radios) {
+          if (r.checked) {
+            selected = r.value;
+            break;
+          }
+        }
+        if (selected !== kunci[`q${i}`]) {
+          allCorrect = false;
+        } else {
+          kodeResult += kode[`q${i}`];
+        }
+      }
+
+      const kodeElement = document.getElementById("kode");
+      kodeElement.style.display = "block";
+      kodeElement.classList.remove("benar", "salah"); // reset class
+
+      if (allCorrect) {
+        kodeElement.innerHTML = `
+          🎉 Selamat jawaban kamu benar, berikut kode yang kamu butuhkan: <br><br>
+          <span style="font-size: 20px;">${kodeResult}</span>
+        `;
+        kodeElement.classList.add("benar");
+      } else {
+        kodeElement.innerHTML = `
+          ❗ Jawaban kamu masih ada yang salah. Periksa kembali ya!
+        `;
+        kodeElement.classList.add("salah");
+      }
+    }
+  </script>
+</body>
+</html>
